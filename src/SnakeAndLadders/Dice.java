@@ -10,6 +10,7 @@ public class Dice {
     }
 
 
+
     public int generateRandomDice() {
         int num = 1+ rand.nextInt(6);
         System.out.println("Your number: " + num);

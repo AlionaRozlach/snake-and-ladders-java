@@ -22,13 +22,13 @@ import java.util.*;
 public class ScoreServiceJDBC implements ScoreService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "postgres";
+    public static final String PASSWORD = "qtQm%H8N";
 
     public static final String INSERT_SCORE =
     "INSERT INTO score (game, player, points, playedon) VALUES (?, ?, ?, ?)";
 
     public static final String SELECT_SCORE =
-        "SELECT game, player, points, playedon FROM score WHERE game = ? ORDER BY points DESC LIMIT 10;";
+        "SELECT game, player, points, playedon FROM score WHERE game = ?";
 
 
     @Override
@@ -72,9 +72,9 @@ public class ScoreServiceJDBC implements ScoreService {
     }
 
     public static void main(String[] args) throws Exception {
-        Score score = new Score("mines", "jaro", 100, new java.util.Date());
+        Score score = new Score("S&L", "jaro", 100, new java.util.Date());
         ScoreService scoreService = new ScoreServiceJDBC();
-        //scoreService.addScore(score);
-        System.out.println(scoreService.getBestScores("mines"));
+        scoreService.addScore(score);
+        System.out.println(scoreService.getBestScores("S&L"));
     }
 }

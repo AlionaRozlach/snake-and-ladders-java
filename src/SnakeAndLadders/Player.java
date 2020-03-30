@@ -2,10 +2,14 @@ package SnakeAndLadders;
 
 public class Player {
     private int position;
+    private String name;
     private static Dice dice;
-    public Player(int position) {
+    private int score;
+
+
+    public Player(String name) {
         dice = new  Dice();
-        this.position = position;
+        this.name = name;
     }
 
     public int getPosition()
@@ -17,14 +21,16 @@ public class Player {
         this.position = position;
     }
 
-    /* public int setPosition(int position)
-    {
-        this.position = position;
-    }*/
+    public String getName() {
+        return name;
+    }
+
+
 
 
     public int throwDice(){
 
+        score+=1;
         return dice.generateRandomDice();
     }
 }

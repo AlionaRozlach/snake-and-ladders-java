@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="be.yildiz-games:module-database-postgresql:1.0.6" level="project" />
+    <orderEntry type="library" name="postgresql-42.2.11" level="project" />
   </component>
 </module>
-

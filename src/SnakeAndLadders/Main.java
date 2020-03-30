@@ -1,14 +1,18 @@
 package SnakeAndLadders;
 
 import SnakeAndLadders.consoleui.ConsoleUI;
+import SnakeAndLadders.gamestudio.service.*;
+
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
 
-    private int numOfPlayers = 1;
-    public static void main(String[] args) {
 
-        Field field = new Field(6,6,5,0 );
-        ConsoleUI ui = new ConsoleUI(field);
+    public static void main(String[] args) throws IOException, CommentException, RatingException {
+
+        ConsoleUI ui = new ConsoleUI();
         ui.gaming();
     }
+
 }

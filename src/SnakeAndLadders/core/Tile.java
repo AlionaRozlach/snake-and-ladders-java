@@ -1,9 +1,9 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
 public class Tile {
-    private TileState state ;
+    private TileType state ;
     private int num;
-    public Tile( TileState state)
+    public Tile( TileType state)
     {
         this.state = state;
 
@@ -20,11 +20,11 @@ public class Tile {
     }
 
 
-    public TileState getState() {
+    public TileType getState() {
         return state;
     }
 
-    void setState(TileState state) {
+    void setState(TileType state) {
         this.state = state;
     }
 

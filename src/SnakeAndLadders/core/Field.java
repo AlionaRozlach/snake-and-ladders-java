@@ -1,9 +1,6 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
 import java.util.*;
-
-import static java.lang.System.exit;
-import static java.lang.System.setOut;
 
 public class Field {
 
@@ -14,7 +11,7 @@ public class Field {
     private int count = 0;
 
     Map<Player,Integer> playerPos;
-    private Random random = new Random();
+
 
 
     public Field(int rowCount, int columnCount,List<Player> players) {
@@ -50,11 +47,11 @@ public class Field {
             for (int j = 0; j < columnCount; j++) {
                 if (count % 2 == 0) {
                     int k = (((j + 1) + (i * columnCount)));
-                    this.tiles[i][j] = new Tile(TileState.FREE);
+                    this.tiles[i][j] = new Tile(TileType.FREE);
                     this.tiles[i][j].setNum(k);
                 } else {
                     int k = (((i + 1) * columnCount) - (j + 1) + 1);
-                    this.tiles[i][j] = new Tile(TileState.FREE);
+                    this.tiles[i][j] = new Tile(TileType.FREE);
                     this.tiles[i][j].setNum(k);
                 }
 
@@ -90,10 +87,10 @@ public class Field {
 
     private boolean snakeHead(int i,int j, Player player)
     {
-        if (tiles[i][j].getState() == TileState.SNAKEHEAD) {
+        if (tiles[i][j].getState() == TileType.SNAKEHEAD) {
             for (int k = i - 1; k >= 0; k--) {
                 for (int m = 5; m >= 0; m--) {
-                    if (tiles[k][m].getState() == TileState.SNAKETILE) {
+                    if (tiles[k][m].getState() == TileType.SNAKETILE) {
                         player.setPosition(tiles[k][m].getNum());
                         playerPos.put(player,tiles[k][m].getNum());
                         System.out.println("You were eaten by a snake, your position: " + tiles[k][m].getNum());
@@ -107,10 +104,10 @@ public class Field {
 
     private boolean ladderDown(int i, int j, Player player)
     {
-        if (tiles[i][j].getState() == TileState.LADDERDOWN) {
+        if (tiles[i][j].getState() == TileType.LADDERDOWN) {
             for (int k = i + 1; k <= 5; k++) {
                 for (int m = 5; m >= 0; m--) {
-                    if (tiles[k][m].getState() == TileState.LADDERUP) {
+                    if (tiles[k][m].getState() == TileType.LADDERUP) {
                         playerPos.put(player,tiles[k][m].getNum());
                         player.setPosition(tiles[k][m].getNum());
                         System.out.println("Congratulations, you climbed a ladder, your position: " + tiles[k][m].getNum());
@@ -150,12 +147,12 @@ public class Field {
             for (int i = 0; i < rowCount; i++) {
 
                 for (int j = 0; j < columnCount; j++) {
-                    if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileState.FREE && tiles[i][j].getState() != TileState.SNAKETILE && tiles[i][j].getState() != TileState.LADDERUP) {
+                    if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileType.FREE && tiles[i][j].getState() != TileType.SNAKETILE && tiles[i][j].getState() != TileType.LADDERUP) {
 
                        snakeHead(i,j,player);
                        ladderDown(i,j,player);
 
-                    } else if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileState.SNAKEHEAD && tiles[i][j].getState() != TileState.LADDERDOWN) {
+                    } else if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileType.SNAKEHEAD && tiles[i][j].getState() != TileType.LADDERDOWN) {
                         playerPos.put(player,position);
                         player.setPosition(position);
                         return false;
@@ -168,39 +165,39 @@ public class Field {
 
 
     public void lightLevel() {
-        tiles[0][3].setState(TileState.SNAKETILE);//1
-        tiles[2][4].setState(TileState.SNAKEHEAD);//1
-        tiles[3][5].setState(TileState.SNAKETILE);//2
-        tiles[4][1].setState(TileState.SNAKEHEAD);//2
+        tiles[0][3].setState(TileType.SNAKETILE);//1
+        tiles[2][4].setState(TileType.SNAKEHEAD);//1
+        tiles[3][5].setState(TileType.SNAKETILE);//2
+        tiles[4][1].setState(TileType.SNAKEHEAD);//2
 
-        tiles[0][1].setState(TileState.LADDERDOWN);//1
-        tiles[3][1].setState(TileState.LADDERUP);//1
-        tiles[0][4].setState(TileState.LADDERDOWN);//2
-        tiles[2][2].setState(TileState.LADDERUP);//2
-        tiles[2][5].setState(TileState.LADDERDOWN);//3
-        tiles[4][5].setState(TileState.LADDERUP);//3
-        tiles[3][4].setState(TileState.LADDERDOWN);//4
-        tiles[5][0].setState(TileState.LADDERUP);//4
+        tiles[0][1].setState(TileType.LADDERDOWN);//1
+        tiles[3][1].setState(TileType.LADDERUP);//1
+        tiles[0][4].setState(TileType.LADDERDOWN);//2
+        tiles[2][2].setState(TileType.LADDERUP);//2
+        tiles[2][5].setState(TileType.LADDERDOWN);//3
+        tiles[4][5].setState(TileType.LADDERUP);//3
+        tiles[3][4].setState(TileType.LADDERDOWN);//4
+        tiles[5][0].setState(TileType.LADDERUP);//4
 
     }
 
-    public void heavyLevel()
+   /* public void heavyLevel()
     {
-        tiles[0][3].setState(TileState.SNAKETILE);//1
-        tiles[2][4].setState(TileState.SNAKEHEAD);//1
-        tiles[3][5].setState(TileState.SNAKETILE);//2
-        tiles[4][1].setState(TileState.SNAKEHEAD);//2
-        tiles[0][1].setState(TileState.SNAKETILE);//1
-        tiles[3][1].setState(TileState.SNAKEHEAD);//1
-        tiles[2][5].setState(TileState.SNAKETILE);//3
-        tiles[4][5].setState(TileState.SNAKEHEAD);//3
+        tiles[0][3].setState(TileType.SNAKETILE);//1
+        tiles[2][4].setState(TileType.SNAKEHEAD);//1
+        tiles[3][5].setState(TileType.SNAKETILE);//2
+        tiles[4][1].setState(TileType.SNAKEHEAD);//2
+        tiles[0][1].setState(TileType.SNAKETILE);//1
+        tiles[3][1].setState(TileType.SNAKEHEAD);//1
+        tiles[2][5].setState(TileType.SNAKETILE);//3
+        tiles[4][5].setState(TileType.SNAKEHEAD);//3
 
 
-        tiles[0][4].setState(TileState.LADDERDOWN);//2
-        tiles[2][2].setState(TileState.LADDERUP);//2
-        tiles[3][4].setState(TileState.LADDERDOWN);//4
-        tiles[5][0].setState(TileState.LADDERUP);//4
-    }
+        tiles[0][4].setState(TileType.LADDERDOWN);//2
+        tiles[2][2].setState(TileType.LADDERUP);//2
+        tiles[3][4].setState(TileType.LADDERDOWN);//4
+        tiles[5][0].setState(TileType.LADDERUP);//4
+    }*/
 
 
 }

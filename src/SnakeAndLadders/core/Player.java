@@ -1,10 +1,9 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
 public class Player {
     private int position;
     private String name;
     private static Dice dice;
-    private int score;
 
 
     public Player(String name) {
@@ -30,7 +29,6 @@ public class Player {
 
     public int throwDice(){
 
-        score+=1;
         return dice.generateRandomDice();
     }
 }

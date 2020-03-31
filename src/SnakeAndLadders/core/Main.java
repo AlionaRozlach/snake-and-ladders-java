@@ -1,4 +1,4 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
 import SnakeAndLadders.consoleui.ConsoleUI;
 import SnakeAndLadders.gamestudio.service.*;

@@ -1,4 +1,4 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
 import java.util.Random;
 
@@ -6,7 +6,7 @@ public class Dice {
     private Random rand;
 
     public Dice() {
-        rand = new Random();//
+        rand = new Random();
     }
 
 
@@ -15,5 +15,5 @@ public class Dice {
         int num = 1+ rand.nextInt(6);
         System.out.println("Number on the dice: " + num);
         return num;
-    }//
+    }
 }

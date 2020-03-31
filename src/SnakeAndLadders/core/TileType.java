@@ -1,5 +1,5 @@
-package SnakeAndLadders;
+package SnakeAndLadders.core;
 
-public enum TileState {
+public enum TileType {
      FREE,SNAKEHEAD,LADDERUP,LADDERDOWN,SNAKETILE
 }

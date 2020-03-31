@@ -266,7 +266,7 @@ public class ConsoleUI {
 
             handleInput(player_now);
             System.out.println(player_now.getName());
-            //int roll = player_now.throwDice();
+           // int roll = player_now.throwDice();
             solved = field.move(player_now,roll);
 
 

@@ -130,18 +130,18 @@ public class Field {
         System.out.println("Now your position number: " + position );
 
 
-        if (position == 100) {
-            playerPos.put(player,100);
+        if (position == 36) {
+            playerPos.put(player,36);
             player.setPosition(position);
             System.out.println(player.getName()+" "+ "WINNER!");
             return true;
         }
 
-        if (position > 100) {
+        if (position > 36) {
             int k = position - valueDice;
             playerPos.put(player,k);
             player.setPosition(k);
-            System.out.println("A number greater than 100 has fallen on the dice, now your position: " + playerPos.get(player));
+            System.out.println("A number greater than 36 has fallen on the dice, now your position: " + playerPos.get(player));
             return false;
         } else {
             for (int i = 0; i < rowCount; i++) {

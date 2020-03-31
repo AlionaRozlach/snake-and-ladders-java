@@ -133,7 +133,7 @@ public class ConsoleUI {
             if(player_amount <=0|| player_amount >6) System.out.println(ANSI_RED + "Invalid amount!" +ANSI_RED);
 
             initPlayers();
-            field = new Field(10,10 ,listOfPlayer);
+            field = new Field(6,6,listOfPlayer);
 
         }
         else if(num==2) {

@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static SnakeAndLadders.core.Field.GAME_NAME;
 
-public class ConsoleUI {
+public class ConsoleUI {//
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";

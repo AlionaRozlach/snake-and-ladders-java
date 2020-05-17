@@ -1,6 +1,3 @@
-
-
-
 package sk.tuke.gamestudio.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +10,15 @@ import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.game.snakeAndLad.core.*;
+import sk.tuke.gamestudio.game.snakeAndLad.core.Dice;
+import sk.tuke.gamestudio.game.snakeAndLad.core.Field;
+import sk.tuke.gamestudio.game.snakeAndLad.core.Player;
+import sk.tuke.gamestudio.game.snakeAndLad.core.Tile;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
 import sk.tuke.gamestudio.service.ScoreService;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -33,26 +31,18 @@ public class SandLController {
     private CommentService commentService;
     @Autowired
     private RatingService ratingService;
-
-    @Autowired
-    private UserController userController;
-
-    private List<Player> players = new ArrayList<Player>();
     private Field field;
-
-    private int count =0;
+    private int count = 0;
     private Dice dice = new Dice();
-   public int k;
-   public String l;
-    public String tr;
-public String loggedUser;
-private Player player;
-public String pos;
-public boolean canMove;
+    private Player player;
+    public int k;
+    public String l;
+    public String loggedUser;
+    public String pos;
 
     @RequestMapping
-    public String snakeAndladders(@RequestParam(value="text",required =false) String text,
-                                  @RequestParam(value="rating",required =false) String rating, Model model) {
+    public String snakeAndladders(@RequestParam(value = "text", required = false) String text,
+                                  @RequestParam(value = "rating", required = false) String rating, Model model) {
 
 
         if (field == null) {
@@ -60,14 +50,12 @@ public boolean canMove;
         }
 
 
-        if(isLogged() && text!=null)
-        {
-            commentService.addComment(new Comment(loggedUser,"snakeAndladders",text,new Date()));
+        if (isLogged() && text != null) {
+            commentService.addComment(new Comment(loggedUser, "snakeAndladders", text, new Date()));
         }
 
-        if(isLogged() && rating!=null)
-        {
-            ratingService.setRating(new Rating(loggedUser,"snakeAndladders",Integer.parseInt(rating),new Date()));
+        if (isLogged() && rating != null) {
+            ratingService.setRating(new Rating(loggedUser, "snakeAndladders", Integer.parseInt(rating), new Date()));
         }
         prepareModel(model);
         return "snakeAndladders";
@@ -75,9 +63,8 @@ public boolean canMove;
 
 
     @RequestMapping("/new")
-    public String newGame(Model model)
-    {
-        l="";
+    public String newGame(Model model) {
+        l = "";
         player.setPosition(1);
         newGame();
         return "snakeAndladders";
@@ -85,39 +72,36 @@ public boolean canMove;
 
 
     @RequestMapping("/dice")
-    public String dice(Model model)
-    {
-       k=dice.generateRandomDice();
-       l=String.valueOf(k);
+    public String dice(Model model) {
+        k = dice.generateRandomDice();
+        l = String.valueOf(k);
 
-      pos =field.move(player,k);
-        try{
-            if(isLogged() && player.getPosition() ==100) {
+        pos = field.move(player, k);
+        try {
+            if (isLogged() && player.getPosition() == 100) {
                 scoreService.addScore(new Score("snakeAndladders", loggedUser, field.getScore(), new Date()));
             }
 
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             //Jaro: Zle poslane nic sa nedeje
             e.printStackTrace();
         }
 
-        if(isLogged() &&player.getPosition()==100)
-        {
-            model.addAttribute("done",true);
+        if (isLogged() && player.getPosition() == 100) {
+            model.addAttribute("done", true);
         }
 
         prepareModel(model);
 
-        model.addAttribute("pos",pos);
-       return "snakeAndladders";
+        model.addAttribute("pos", pos);
+        return "snakeAndladders";
     }
 
     public boolean isClick() {
-        if(isLogged() &&player.getPosition()==100)
-        {
-           return false;
-
+        if (isLogged() && player.getPosition() == 100) {
+            return false;
         }
+
         return true;
     }
 
@@ -130,16 +114,15 @@ public boolean canMove;
             for (int column = 0; column < field.getColumnCount(); column++) {
                 sb.append("<td>\n");
 
-                Tile tile = field.getTile(row,column);
+                Tile tile = field.getTile(row, column);
 
                 count++;
-                if(player==null || (player.getPosition() != tile.getNum()))
-                {
+                if (player == null || (player.getPosition() != tile.getNum())) {
                     sb.append("<img src='/image/LL" + count + ".png'>");
                 }
-                if(player!=null) {
+                if (player != null) {
                     if (player.getPosition() == tile.getNum()) {
-                        sb.append("<img src='/image/fishka/L" +count+ ".png'>");
+                        sb.append("<img src='/image/fishka/L" + count + ".png'>");
                     }
                 }
             }
@@ -149,27 +132,12 @@ public boolean canMove;
             sb.append("</td>\n");
         }
 
-        count=0;
-            sb.append("</tr>\n");
+        count = 0;
+        sb.append("</tr>\n");
 
         sb.append("</table>\n");
 
         return sb.toString();
-    }
-
-
-
-    private void prepareModel(Model model) {
-        model.addAttribute("scores", scoreService.getBestScores("snakeAndladders"));
-        model.addAttribute("comments",commentService.getComments("snakeAndladders"));
-        model.addAttribute("avrating",ratingService.getAverageRating("snakeAndladders"));
-        if ((ratingService.getRating("snakeAndladders",loggedUser))!=0){
-            model.addAttribute("ratingPlayer",ratingService.getRating("snakeAndladders",loggedUser));
-        }
-    }
-
-    private void newGame() {
-        field = new Field(10, 10);
     }
 
     @RequestMapping("/login")
@@ -195,5 +163,18 @@ public boolean canMove;
         return loggedUser != null;
     }
 
+
+    private void prepareModel(Model model) {
+        model.addAttribute("scores", scoreService.getBestScores("snakeAndladders"));
+        model.addAttribute("comments", commentService.getComments("snakeAndladders"));
+        model.addAttribute("avrating", ratingService.getAverageRating("snakeAndladders"));
+        if ((ratingService.getRating("snakeAndladders", loggedUser)) != 0) {
+            model.addAttribute("ratingPlayer", ratingService.getRating("snakeAndladders", loggedUser));
+        }
+    }
+
+    private void newGame() {
+        field = new Field(10, 10);
+    }
 
 }

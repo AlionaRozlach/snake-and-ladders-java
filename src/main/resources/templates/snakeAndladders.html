@@ -43,16 +43,15 @@
 <!--    </div>-->
 
 
-
 <div th:if="${@sandLController.logged}">
     You are logged as <span th:text="${@sandLController.loggedUser}"/>.
     <a href="/snakeAndladders/logout">Logout</a>
 
     <div class="roll">
-    <form method="get" action="/snakeAndladders/dice">
-        <button type="submit" value="Roll">Roll</button>
-    </form>
-</div>
+        <form method="get" action="/snakeAndladders/dice">
+            <button type="submit" value="Roll">Roll</button>
+        </form>
+    </div>
 
     <div th:if="${@sandLController.click}">
         Your number: <span th:text="${@sandLController.k}"/>.
@@ -69,8 +68,6 @@
 </div>
 
 
-
-
 <div th:if="${done}==true">
     <form method="get" action="/snakeAndladders/new">
         <input type="submit" value="New Game">
@@ -82,51 +79,43 @@
 </div>
 
 
-
-
-
-
-
-
 <div th:utext="${@sandLController.htmlField}"/>
 
 
-
-
 <div class="score">
-<h2>Scores</h2>
+    <h2>Scores</h2>
     <table class="scoreTable">
-    <tr>
-        <th>Player</th>
-        <th>Points</th>
-    </tr>
-    <tr th:each="score : ${scores}">
-        <td>  <span th:text="${score.player}"/></td>
+        <tr>
+            <th>Player</th>
+            <th>Points</th>
+        </tr>
+        <tr th:each="score : ${scores}">
+            <td><span th:text="${score.player}"/></td>
 
 
-        <td>  <span th:text="${score.points}"/></td>
-    </tr>
+            <td><span th:text="${score.points}"/></td>
+        </tr>
     </table>
 </div>
 
 <div>
-<h2>Comments</h2>
-<table>
-    <tr>
-        <th>Player</th>
-        <th>Comment</th>
-    </tr>
-    <tr th:each="comment : ${comments}">
-        <td> <span th:text="${comment.player}"/></td>
-        <td><span th:text="${comment.comment}"/></td>
-    </tr>
-</table>
+    <h2>Comments</h2>
+    <table>
+        <tr>
+            <th>Player</th>
+            <th>Comment</th>
+        </tr>
+        <tr th:each="comment : ${comments}">
+            <td><span th:text="${comment.player}"/></td>
+            <td><span th:text="${comment.comment}"/></td>
+        </tr>
+    </table>
 </div>
 
 <div>
     <h2>Average Rating</h2>
 
-            <span th:text="${avrating}"/>
+    <span th:text="${avrating}"/>
 </div>
 
 <div>
@@ -136,18 +125,18 @@
 </div>
 
 <div>
-    <h2>  Enter your opinion</h2>
-  <form id="comment" method="get" action="/snakeAndladders">
-    <textarea id ="text" name="text"  placeholder="My opinion..."></textarea>
-            <button type="submit" value = "send">Enter</button>
-            </form>
+    <h2> Enter your opinion</h2>
+    <form id="comment" method="get" action="/snakeAndladders">
+        <textarea id="text" name="text" placeholder="My opinion..."></textarea>
+        <button type="submit" value="send">Enter</button>
+    </form>
 </div>
 
 <div>
-    <h2>  Enter your Rating</h2>
+    <h2> Enter your Rating</h2>
     <form id="rate" method="get" action="/snakeAndladders">
-        <textarea id ="rating" name="rating"  placeholder="My mark..."></textarea>
-        <button type="submit" value = "send">Enter</button>
+        <textarea id="rating" name="rating" placeholder="My mark..."></textarea>
+        <button type="submit" value="send">Enter</button>
     </form>
 </div>
 </body>

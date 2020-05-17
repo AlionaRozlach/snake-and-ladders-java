@@ -15,25 +15,28 @@ public class RatingServiceJPA implements RatingService {
     public void setRating(Rating rating) {
        // entityManager.persist(rating);
         try{
-            int ratingId = ((Rating)entityManager.createQuery("SELECT r FROM Rating r WHERE r.game=:snakeAndladders AND r.player=:player").setParameter("player",rating.getPlayer())
-            .setParameter("snakeAndladders",rating.getGame()).getSingleResult()).getIdent();
+            int ratingId = ((Rating)entityManager.createQuery("SELECT r FROM Rating r WHERE r.game=:game AND r.player=:player").setParameter("player",rating.getPlayer())
+            .setParameter("game",rating.getGame()).getSingleResult()).getIdent();
             Rating exist = entityManager.getReference(Rating.class,ratingId);
             exist.setRating(rating.getRating());
         }
         catch (RuntimeException e)
         {
            System.out.println("sorry");
+           entityManager.persist(rating);
         }
     }
 
     @Override
-    public int getAverageRating(String game) {
+    public int getAverageRating(String game)  {
         List<Rating> ratings = entityManager.createNamedQuery("Rating.getAverageRating").setParameter("game", game).getResultList();
 
         int cnt=0;
         for (int i = 0; i < ratings.size(); i++) {
             cnt+=ratings.get(i).getRating();
         }return cnt/ratings.size();
+
+
     }
 
     @Override

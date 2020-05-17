@@ -13,7 +13,17 @@ public class RatingServiceJPA implements RatingService {
 
     @Override
     public void setRating(Rating rating) {
-        entityManager.persist(rating);
+       // entityManager.persist(rating);
+        try{
+            int ratingId = ((Rating)entityManager.createQuery("SELECT r FROM Rating r WHERE r.game=:snakeAndladders AND r.player=:player").setParameter("player",rating.getPlayer())
+            .setParameter("snakeAndladders",rating.getGame()).getSingleResult()).getIdent();
+            Rating exist = entityManager.getReference(Rating.class,ratingId);
+            exist.setRating(rating.getRating());
+        }
+        catch (RuntimeException e)
+        {
+           System.out.println("sorry");
+        }
     }
 
     @Override

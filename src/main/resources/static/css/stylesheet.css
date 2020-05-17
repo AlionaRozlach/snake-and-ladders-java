@@ -1,0 +1,24 @@
+body{
+    background-color: violet;
+    text-align: center;
+}
+.title{
+    text-align: center;
+}
+.score{
+    text-align: center;
+
+}
+
+table{
+    margin: auto;
+}
+
+.field{
+    border-spacing: 0px;
+    border-collapse: collapse;
+
+}
+td{
+padding: 0;
+}

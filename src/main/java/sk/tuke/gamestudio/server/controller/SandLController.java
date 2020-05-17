@@ -13,8 +13,6 @@ import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
-
-import sk.tuke.gamestudio.game.snakeAndLad.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.snakeAndLad.core.*;
 import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
@@ -76,8 +74,14 @@ public boolean canMove;
     }
 
 
-    public String namePlayer;
-
+    @RequestMapping("/new")
+    public String newGame(Model model)
+    {
+        l="";
+        player.setPosition(1);
+        newGame();
+        return "snakeAndladders";
+    }
 
 
     @RequestMapping("/dice")
@@ -96,6 +100,12 @@ public boolean canMove;
             //Jaro: Zle poslane nic sa nedeje
             e.printStackTrace();
         }
+
+        if(isLogged() &&player.getPosition()==100)
+        {
+            model.addAttribute("done",true);
+        }
+
         prepareModel(model);
 
         model.addAttribute("pos",pos);
@@ -103,7 +113,12 @@ public boolean canMove;
     }
 
     public boolean isClick() {
-        return l != null;
+        if(isLogged() &&player.getPosition()==100)
+        {
+           return false;
+
+        }
+        return true;
     }
 
     //Tento pristup sice nie je idealny, ale pre zaciatok je najjednoduchsi
@@ -161,10 +176,6 @@ public boolean canMove;
     public String login(String login, Model model) {
         loggedUser = login;
         player = new Player(login);
-//        model.addAttribute("comments",commentService.getComments("snakeAndladders"));
-//
-//        model.addAttribute("scores", scoreService.getBestScores("snakeAndladders"));
-//        model.addAttribute("rating",ratingService.getAverageRating("snakeAndladders"));
         prepareModel(model);
         return "snakeAndladders";
     }

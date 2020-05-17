@@ -1,19 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Minesweeper</title>
+    <title>Snake And Ladders</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/stylesheet.css"/>
 </head>
 <body>
 
-<h1>Welcome to <a href="/">Gamestudio</a>!</h1>
-<h1>Snakes And Ladders</h1>
-
-<!--<a href="/mines/new">New game</a><br/>-->
-<!--<a href="/mines/mark" th:text='${@minesController.marking ? "Mark" : "Open"}'/><br/>-->
-
-<!--<a href="/snakeAndladder/gameState"/>-->
+<h1 class="title">Snakes And Ladders</h1>
 
 <!--Pocet harcov-->
 
@@ -53,6 +47,18 @@
 <div th:if="${@sandLController.logged}">
     You are logged as <span th:text="${@sandLController.loggedUser}"/>.
     <a href="/snakeAndladders/logout">Logout</a>
+
+    <div class="roll">
+    <form method="get" action="/snakeAndladders/dice">
+        <button type="submit" value="Roll">Roll</button>
+    </form>
+</div>
+
+    <div th:if="${@sandLController.click}">
+        Your number: <span th:text="${@sandLController.k}"/>.
+        <span th:text="${@sandLController.pos}"/>.
+
+    </div>
 </div>
 
 <div th:if="${not @sandLController.logged}">
@@ -63,20 +69,17 @@
 </div>
 
 
-<!--KUBIK-->
 
-    <div>
-        <form method="get" action="/snakeAndladders/dice">
-            <button type="submit" value="Roll">Roll</button>
-        </form>
-    </div>
 
-    <div th:if="${@sandLController.click}">
-        Your number: <span th:text="${@sandLController.k}"/>.
-        <span th:text="${@sandLController.pos}"/>.
+<div th:if="${done}==true">
+    <form method="get" action="/snakeAndladders/new">
+        <input type="submit" value="New Game">
+    </form>
+</div>
 
-    </div>
-
+<div th:unless="${@sandLController.click}">
+    YOU ARE WINNER!!!
+</div>
 
 
 
@@ -87,33 +90,38 @@
 
 <div th:utext="${@sandLController.htmlField}"/>
 
-<!--<div>-->
-<!--    <a href="/snakeAndladders/rolling">Roll dice</a>-->
-<!--</div>-->
 
 
-<!--<h2>Players</h2>-->
-<!--<ol>-->
-<!--    <p th:each="players: ${players}">-->
-<!--    </p>-->
-<!--</ol>-->
 
+<div class="score">
 <h2>Scores</h2>
-<ol>
-    <li th:each="score : ${scores}">
-        <span th:text="${score.player}"/>
-        <span th:text="${score.points}"/>
-    </li>
-</ol>
+    <table class="scoreTable">
+    <tr>
+        <th>Player</th>
+        <th>Points</th>
+    </tr>
+    <tr th:each="score : ${scores}">
+        <td>  <span th:text="${score.player}"/></td>
+
+
+        <td>  <span th:text="${score.points}"/></td>
+    </tr>
+    </table>
+</div>
 
 <div>
 <h2>Comments</h2>
-<ol>
-    <li th:each="comment : ${comments}">
-        <span th:text="${comment.player}"/>
-        <span th:text="${comment.comment}"/>
-    </li>
-</ol></div>
+<table>
+    <tr>
+        <th>Player</th>
+        <th>Comment</th>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td> <span th:text="${comment.player}"/></td>
+        <td><span th:text="${comment.comment}"/></td>
+    </tr>
+</table>
+</div>
 
 <div>
     <h2>Average Rating</h2>
@@ -128,7 +136,7 @@
 </div>
 
 <div>
-    <h4>  Enter your opinion</h4>
+    <h2>  Enter your opinion</h2>
   <form id="comment" method="get" action="/snakeAndladders">
     <textarea id ="text" name="text"  placeholder="My opinion..."></textarea>
             <button type="submit" value = "send">Enter</button>
@@ -136,7 +144,7 @@
 </div>
 
 <div>
-    <h4>  Enter your Rating</h4>
+    <h2>  Enter your Rating</h2>
     <form id="rate" method="get" action="/snakeAndladders">
         <textarea id ="rating" name="rating"  placeholder="My mark..."></textarea>
         <button type="submit" value = "send">Enter</button>

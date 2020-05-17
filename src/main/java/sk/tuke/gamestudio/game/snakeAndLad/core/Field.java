@@ -181,21 +181,27 @@ public class Field {
 
 
     public void lightLevel() {
-        tiles[1][0].setState(TileType.SNAKETILE);//1
-        tiles[4][5].setState(TileType.SNAKEHEAD);//1
-        tiles[0][6].setState(TileType.SNAKETILE);//2
-        tiles[4][8].setState(TileType.SNAKEHEAD);//2
-        tiles[7][3].setState(TileType.SNAKEHEAD);//2
-        tiles[4][1].setState(TileType.SNAKETILE);//2
-        tiles[9][6].setState(TileType.SNAKEHEAD);//2
-        tiles[5][6].setState(TileType.SNAKETILE);//2
+        tiles[0][2].setState(TileType.SNAKETILE);//1
+        tiles[1][4].setState(TileType.SNAKEHEAD);//1
+        tiles[2][5].setState(TileType.SNAKETILE);//2
+        tiles[3][7].setState(TileType.SNAKEHEAD);//2
+        tiles[5][2].setState(TileType.SNAKEHEAD);//2
+        tiles[4][0].setState(TileType.SNAKETILE);//2
+        tiles[6][5].setState(TileType.SNAKEHEAD);//2
+        tiles[5][3].setState(TileType.SNAKETILE);//2
+        tiles[8][5].setState(TileType.SNAKEHEAD);//2
+        tiles[6][8].setState(TileType.SNAKETILE);//2
+        tiles[9][2].setState(TileType.SNAKEHEAD);//2
+        tiles[8][4].setState(TileType.SNAKETILE);//2
 
-        tiles[0][2].setState(TileType.LADDERDOWN);//1
-        tiles[2][2].setState(TileType.LADDERUP);//1
-        tiles[4][9].setState(TileType.LADDERDOWN);//2
-        tiles[7][8].setState(TileType.LADDERUP);//2
-        tiles[5][0].setState(TileType.LADDERDOWN);//3
+        tiles[0][0].setState(TileType.LADDERDOWN);//1
+        tiles[2][0].setState(TileType.LADDERUP);//1
+        tiles[2][9].setState(TileType.LADDERDOWN);//2
+        tiles[4][8].setState(TileType.LADDERUP);//2
+        tiles[6][0].setState(TileType.LADDERDOWN);//3
         tiles[8][1].setState(TileType.LADDERUP);//3
+        tiles[8][9].setState(TileType.LADDERDOWN);//3
+        tiles[9][7].setState(TileType.LADDERUP);//3
 
 
     }

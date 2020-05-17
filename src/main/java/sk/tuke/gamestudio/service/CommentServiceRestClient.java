@@ -12,12 +12,12 @@ public class CommentServiceRestClient implements CommentService {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void addComment(Comment comment) throws CommentException {
+    public void addComment(Comment comment)  {
         restTemplate.postForEntity(URL, comment, Comment.class);
     }
 
     @Override
-    public List<Comment> getComments(String game) throws CommentException {
+    public List<Comment> getComments(String game)  {
         return Arrays.asList(restTemplate.getForEntity(URL + "/" + game, Comment[].class).getBody());
     }
 }

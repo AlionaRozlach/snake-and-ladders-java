@@ -9,17 +9,17 @@ public class RatingServiceRestClient implements RatingService {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void setRating(Rating rating) throws RatingException {
+    public void setRating(Rating rating){
         restTemplate.postForEntity(URL, rating, Rating.class);
     }
 
     @Override
-    public int getAverageRating(String game) throws RatingException {
+    public int getAverageRating(String game)  {
         return restTemplate.getForEntity(URL + "/" + game, Integer.class).getBody();
     }
 
     @Override
-    public int getRating(String game, String player) throws RatingException {
+    public int getRating(String game, String player) {
         return restTemplate.getForEntity(URL + "/" + game + "/" + player, Integer.class).getBody();
     }
 }

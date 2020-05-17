@@ -11,20 +11,22 @@ public class Field {
     private final int columnCount;
     private final Tile[][] tiles;
     private int count = 0;
+    private int position=1;
+    private long startMillis;
 
     Map<Player, Integer> playerPos;
 
 
-    public Field(int rowCount, int columnCount, List<Player> players) {
+    public Field(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.tiles = new Tile[rowCount][columnCount];
 
         this.playerPos = new HashMap<Player, Integer>();
 
-        for (int i = 0; i < players.size(); i++) {
-            this.playerPos.put(players.get(i), 1);
-        }
+
+           // this.playerPos.put(player, 1);
+
         generate();
     }
 
@@ -39,6 +41,13 @@ public class Field {
 
     private void generate() {
         generateField();
+        startMillis = System.currentTimeMillis();
+
+    }
+
+
+    public Tile getTile(int row, int column) {
+        return tiles[row][column];
     }
 
     private void generateField() {
@@ -85,98 +94,117 @@ public class Field {
         }
     }
 
-    private boolean snakeHead(int i, int j, Player player) {
+    private String snakeHead(int i, int j, Player player) {
         if (tiles[i][j].getState() == TileType.SNAKEHEAD) {
             for (int k = i - 1; k >= 0; k--) {
-                for (int m = 5; m >= 0; m--) {
+                for (int m = 9; m >= 0; m--) {
                     if (tiles[k][m].getState() == TileType.SNAKETILE) {
+                        position= tiles[k][m].getNum();
                         player.setPosition(tiles[k][m].getNum());
                         playerPos.put(player, tiles[k][m].getNum());
-                        System.out.println("You were eaten by a snake, your position: " + tiles[k][m].getNum());
-                        return false;
+                        //String s="You are were eaten by snake you looser";
+                        //return s;
+                        return ("You were eaten by a snake, your position: " + player.getPosition());
                     }
                 }
             }
         }
-        return false;
+        return ("You were eaten by a snake, your position: " + player.getPosition());
     }
 
-    private boolean ladderDown(int i, int j, Player player) {
+    private String ladderDown(int i, int j, Player player) {
         if (tiles[i][j].getState() == TileType.LADDERDOWN) {
-            for (int k = i + 1; k <= 5; k++) {
-                for (int m = 5; m >= 0; m--) {
+            for (int k = i + 1; k <= 9; k++) {
+                for (int m = 9; m >= 0; m--) {
                     if (tiles[k][m].getState() == TileType.LADDERUP) {
-                        playerPos.put(player, tiles[k][m].getNum());
-                        player.setPosition(tiles[k][m].getNum());
-                        System.out.println("Congratulations, you climbed a ladder, your position: " + tiles[k][m].getNum());
-                        return false;
+                        position= tiles[k][m].getNum();
+                        //playerPos.put(player, tiles[k][m].getNum());
+                        player.setPosition(position);
+                        return ("Congratulations, you climbed a ladder, your position: " + player.getPosition());
+
                     }
                 }
             }
-            return false;
+            return ("Congratulations, you climbed a ladder, your position: " + player.getPosition());
         }
-        return false;
+        return ("Congratulations, you climbed a ladder, your position: " + player.getPosition());
     }
 
 
-    public boolean move(Player player, int valueDice) {
+    public String move(Player player, int valueDice) {
 
-        int position = playerPos.get(player);
         position += valueDice;
 
 
         System.out.println("Now your position number: " + position);
 
 
-        if (position == 36) {
-            playerPos.put(player, 36);
+        if (position == 100) {
+         //   playerPos.put(player, 100);
             player.setPosition(position);
-            System.out.println(player.getName() + " " + "WINNER!");
-            return true;
+            return (player.getName() + " " + "WINNER!" + String.valueOf(player.getPosition()));
+
         }
 
-        if (position > 36) {
-            int k = position - valueDice;
-            playerPos.put(player, k);
-            player.setPosition(k);
-            System.out.println("A number greater than 36 has fallen on the dice, now your position: " + playerPos.get(player));
-            return false;
+        if (position > 100) {
+           position-= valueDice;
+           // playerPos.put(player, k);
+            player.setPosition(position);
+            return ("A number greater than 100 has fallen on the dice, now your position: " + player.getPosition());
+
         } else {
             for (int i = 0; i < rowCount; i++) {
 
                 for (int j = 0; j < columnCount; j++) {
                     if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileType.FREE && tiles[i][j].getState() != TileType.SNAKETILE && tiles[i][j].getState() != TileType.LADDERUP) {
+                        if (tiles[i][j].getState() == TileType.SNAKEHEAD) {
+                            snakeHead(i, j, player);
+                            return ("You were eaten by a snake, your position: " + player.getPosition());
+                        }
+                        if (tiles[i][j].getState() == TileType.LADDERDOWN) {
+                            ladderDown(i, j, player);
+                            return ("Congratulations, you climbed a ladder, your position: " + player.getPosition());
+                        }
 
-                        snakeHead(i, j, player);
-                        ladderDown(i, j, player);
 
                     } else if (tiles[i][j].getNum() == position && tiles[i][j].getState() != TileType.SNAKEHEAD && tiles[i][j].getState() != TileType.LADDERDOWN) {
-                        playerPos.put(player, position);
+             //           playerPos.put(player, position);
                         player.setPosition(position);
-                        return false;
+                      return("Your position: " + player.getPosition());
                     }
                 }
             }
-            return false;
-        }
+
+        }return ("Your position: " + player.getPosition());
+
     }
 
 
     public void lightLevel() {
-        tiles[0][3].setState(TileType.SNAKETILE);//1
-        tiles[2][4].setState(TileType.SNAKEHEAD);//1
-        tiles[3][5].setState(TileType.SNAKETILE);//2
-        tiles[4][1].setState(TileType.SNAKEHEAD);//2
+        tiles[1][0].setState(TileType.SNAKETILE);//1
+        tiles[4][5].setState(TileType.SNAKEHEAD);//1
+        tiles[0][6].setState(TileType.SNAKETILE);//2
+        tiles[4][8].setState(TileType.SNAKEHEAD);//2
+        tiles[7][3].setState(TileType.SNAKEHEAD);//2
+        tiles[4][1].setState(TileType.SNAKETILE);//2
+        tiles[9][6].setState(TileType.SNAKEHEAD);//2
+        tiles[5][6].setState(TileType.SNAKETILE);//2
 
-        tiles[0][1].setState(TileType.LADDERDOWN);//1
-        tiles[3][1].setState(TileType.LADDERUP);//1
-        tiles[0][4].setState(TileType.LADDERDOWN);//2
-        tiles[2][2].setState(TileType.LADDERUP);//2
-        tiles[2][5].setState(TileType.LADDERDOWN);//3
-        tiles[4][5].setState(TileType.LADDERUP);//3
-        tiles[3][4].setState(TileType.LADDERDOWN);//4
-        tiles[5][0].setState(TileType.LADDERUP);//4
+        tiles[0][2].setState(TileType.LADDERDOWN);//1
+        tiles[2][2].setState(TileType.LADDERUP);//1
+        tiles[4][9].setState(TileType.LADDERDOWN);//2
+        tiles[7][8].setState(TileType.LADDERUP);//2
+        tiles[5][0].setState(TileType.LADDERDOWN);//3
+        tiles[8][1].setState(TileType.LADDERUP);//3
 
+
+    }
+
+    private int getPlayingTime() {
+        return ((int) (System.currentTimeMillis() - startMillis)) / 1000;
+    }
+    public int getScore() {
+        return rowCount * columnCount * 3 - getPlayingTime();
     }
 
 }

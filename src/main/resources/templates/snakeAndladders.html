@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Minesweeper</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+</head>
+<body>
+
+<h1>Welcome to <a href="/">Gamestudio</a>!</h1>
+<h1>Snakes And Ladders</h1>
+
+<!--<a href="/mines/new">New game</a><br/>-->
+<!--<a href="/mines/mark" th:text='${@minesController.marking ? "Mark" : "Open"}'/><br/>-->
+
+<!--<a href="/snakeAndladder/gameState"/>-->
+
+<!--Pocet harcov-->
+
+<!--<div th:if="${@sandLController.logged}">-->
+<!--    <div th:if="${check} == true" >Number of players: <span th:text="${@sandLController.countOfPlayers}"/>.</div>-->
+<!--    <div th:if="${check} == false">-->
+<!--        Bad input!Try again!-->
+<!--    </div>-->
+
+<!--</div>-->
+
+<!--<div>-->
+
+<!--    <div th:if="${not @sandLController.logged} OR ${check}==false">-->
+<!--        <form method="get" action="/snakeAndladders/player">-->
+<!--            Plese enter number of players: <input name="player" type="text"/>-->
+<!--            <input type="submit" value="Enter">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--initializacia hracov-->
+
+<!--    <div th:if="${@sandLController.loggedUser} == true">-->
+<!--        <form method="get" action="/snakeAndladders/init">-->
+<!--            Enter your name: <input name="login" type="text"/>-->
+<!--            <input type="submit" value="Login">-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+<!--    <div th:if="${user} == false" >-->
+<!--        Welcome!<span th:text="${newUser}"/>-->
+<!--        Please roll the dice to start the game!\n-->
+<!--    </div>-->
+
+
+
+<div th:if="${@sandLController.logged}">
+    You are logged as <span th:text="${@sandLController.loggedUser}"/>.
+    <a href="/snakeAndladders/logout">Logout</a>
+</div>
+
+<div th:if="${not @sandLController.logged}">
+    <form method="get" action="/snakeAndladders/login">
+        Login: <input name="login" type="text"/>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+
+<!--KUBIK-->
+
+    <div>
+        <form method="get" action="/snakeAndladders/dice">
+            <button type="submit" value="Roll">Roll</button>
+        </form>
+    </div>
+
+    <div th:if="${@sandLController.click}">
+        Your number: <span th:text="${@sandLController.k}"/>.
+        <span th:text="${@sandLController.pos}"/>.
+
+    </div>
+
+
+
+
+
+
+
+
+
+<div th:utext="${@sandLController.htmlField}"/>
+
+<!--<div>-->
+<!--    <a href="/snakeAndladders/rolling">Roll dice</a>-->
+<!--</div>-->
+
+
+<!--<h2>Players</h2>-->
+<!--<ol>-->
+<!--    <p th:each="players: ${players}">-->
+<!--    </p>-->
+<!--</ol>-->
+
+<h2>Scores</h2>
+<ol>
+    <li th:each="score : ${scores}">
+        <span th:text="${score.player}"/>
+        <span th:text="${score.points}"/>
+    </li>
+</ol>
+
+<div>
+<h2>Comments</h2>
+<ol>
+    <li th:each="comment : ${comments}">
+        <span th:text="${comment.player}"/>
+        <span th:text="${comment.comment}"/>
+    </li>
+</ol></div>
+
+<div>
+    <h2>Average Rating</h2>
+
+            <span th:text="${avrating}"/>
+</div>
+
+<div>
+    <h2>Your Rating</h2>
+
+    <span th:text="${ratingPlayer}"/>
+</div>
+
+<div>
+    <h4>  Enter your opinion</h4>
+  <form id="comment" method="get" action="/snakeAndladders">
+    <textarea id ="text" name="text"  placeholder="My opinion..."></textarea>
+            <button type="submit" value = "send">Enter</button>
+            </form>
+</div>
+
+<div>
+    <h4>  Enter your Rating</h4>
+    <form id="rate" method="get" action="/snakeAndladders">
+        <textarea id ="rating" name="rating"  placeholder="My mark..."></textarea>
+        <button type="submit" value = "send">Enter</button>
+    </form>
+</div>
+</body>
+</html>

@@ -10,14 +10,14 @@ public class RatingServiceJDBC implements RatingService {
 
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "qtQm%H8N";
+    public static final String PASSWORD = "al";
     public static final String SET_RATING =
             "INSERT INTO rating (player, game, rating, ratedon) VALUES (?, ?, ?, ?)";
     public static final String SELECT_RATING =
             "SELECT  player,game,rating, ratedon FROM rating WHERE game = ?";
 
     @Override
-    public void setRating(Rating rating) throws RatingException {
+    public void setRating(Rating rating) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             try (PreparedStatement ps = connection.prepareStatement(SET_RATING)) {
                 ps.setString(1, rating.getPlayer());
@@ -33,7 +33,7 @@ public class RatingServiceJDBC implements RatingService {
     }
 
     @Override
-    public int getAverageRating(String game) throws RatingException {
+    public int getAverageRating(String game) {
         int sum = 0;
         int cnt = 0;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -54,7 +54,7 @@ public class RatingServiceJDBC implements RatingService {
     }
 
     @Override
-    public int getRating(String game, String player) throws RatingException {
+    public int getRating(String game, String player) {
         int rating = 0;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             try (PreparedStatement ps = connection.prepareStatement(SELECT_RATING)) {

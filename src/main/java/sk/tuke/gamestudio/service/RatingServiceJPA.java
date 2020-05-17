@@ -12,12 +12,12 @@ public class RatingServiceJPA implements RatingService {
     private EntityManager entityManager;
 
     @Override
-    public void setRating(Rating rating) throws RatingException {
+    public void setRating(Rating rating) {
         entityManager.persist(rating);
     }
 
     @Override
-    public int getAverageRating(String game) throws RatingException {
+    public int getAverageRating(String game) {
         List<Rating> ratings = entityManager.createNamedQuery("Rating.getAverageRating").setParameter("game", game).getResultList();
 
         int cnt=0;
@@ -27,7 +27,7 @@ public class RatingServiceJPA implements RatingService {
     }
 
     @Override
-    public int getRating(String game, String player) throws RatingException {
+    public int getRating(String game, String player){
         List<Rating> ratings = entityManager.createNamedQuery("Rating.getRating").setParameter("game", game).getResultList();
         for (int i = 0; i < ratings.size(); i++) {
             if (ratings.get(i).getPlayer().equals(player)) {

@@ -10,7 +10,7 @@ import java.util.List;
 public class ScoreServiceJDBC implements ScoreService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "qtQm%H8N";
+    public static final String PASSWORD = "al";
 
     public static final String INSERT_SCORE =
             "INSERT INTO score (game, player, points, playedon) VALUES (?, ?, ?, ?)";

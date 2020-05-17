@@ -9,7 +9,7 @@ import java.util.List;
 public class CommentServiceJDBC implements CommentService {
     public static final String URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "qtQm%H8N";
+    public static final String PASSWORD = "al";
 
     public static final String INSERT_COMMENT =
             "INSERT INTO comment (game, player, comment, commentedon) VALUES (?, ?, ?, ?)";
@@ -18,7 +18,7 @@ public class CommentServiceJDBC implements CommentService {
             "SELECT game, player, comment, commentedon FROM comment WHERE game = ?";
 
     @Override
-    public void addComment(Comment comment) throws CommentException {
+    public void addComment(Comment comment)  {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             try (PreparedStatement ps = connection.prepareStatement(INSERT_COMMENT)) {
                 ps.setString(1, comment.getGame());
@@ -34,7 +34,7 @@ public class CommentServiceJDBC implements CommentService {
     }
 
     @Override
-    public List<Comment> getComments(String game) throws CommentException {
+    public List<Comment> getComments(String game) {
         List<Comment> comments = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             try (PreparedStatement ps = connection.prepareStatement(SELECT_COMMENT)) {

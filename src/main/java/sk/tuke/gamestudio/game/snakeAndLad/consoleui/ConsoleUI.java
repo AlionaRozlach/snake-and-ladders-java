@@ -35,7 +35,7 @@ public class ConsoleUI {
 
 
     private static final Pattern INPUT_PATTERN = Pattern.compile("[RX]");
-
+    private static final String GAME_NAME = "snakeAndladders";
 
     private int roll = 0;
     private List<Player> listOfPlayer = new ArrayList<Player>();
@@ -132,7 +132,7 @@ public class ConsoleUI {
             if (player_amount <= 0 || player_amount > 6) System.out.println(ANSI_RED + "Invalid amount!" + ANSI_RED);
 
             initPlayers();
-            field = new Field(6, 6, listOfPlayer);
+            field = new Field(6, 6);
 
         } else if (num == 2) {
             System.out.println(ANSI_YELLOW + "At the beginning of the game you are on top of the field in the left corner at position number 1." +
@@ -248,8 +248,8 @@ public class ConsoleUI {
 
             handleInput(player_now);
             System.out.println(player_now.getName());
-            // int roll = player_now.throwDice();
-            solved = field.move(player_now, roll);
+             int roll = player_now.throwDice();
+          //  solved = field.move(player_now, roll);
 
 
             if (solved) {
